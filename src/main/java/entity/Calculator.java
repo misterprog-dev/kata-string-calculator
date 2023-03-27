@@ -2,6 +2,9 @@ package entity;
 
 public class Calculator {
     String add(String number) {
-        return "0";
+        if("".equals(number.trim())) {
+            return "0";
+        }
+        return number;
     }
 }
