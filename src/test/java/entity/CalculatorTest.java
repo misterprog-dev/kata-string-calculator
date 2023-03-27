@@ -41,4 +41,16 @@ class CalculatorTest {
         // Then
         assertEquals(sum, "3.3");
     }
+
+    @Test
+    void should_return_sum_when_many_input_number() {
+        // Given
+        Calculator calculator = new Calculator();
+
+        // When
+        String sum = calculator.add("1.1,2.2,3,4,2.3");
+
+        // Then
+        assertEquals(sum, "12.6");
+    }
 }
