@@ -9,7 +9,7 @@ import static java.util.Arrays.stream;
 public class Calculator {
     private static final DecimalFormat df = new DecimalFormat("0");
     public static final String EMPTY_INPUT = "";
-    public static final String COMMA = ",";
+    public static final String ALL_SEPARATOR = ",|\n";
     public static final String ZERO_STRING = "0";
 
     String add(String number) {
@@ -17,7 +17,7 @@ public class Calculator {
             return ZERO_STRING;
         }
 
-        String[] numbers = number.split(COMMA);
+        String[] numbers = number.split(ALL_SEPARATOR);
 
         return stream(numbers)
                 .map(BigDecimal::new)

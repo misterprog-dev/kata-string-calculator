@@ -53,4 +53,16 @@ class CalculatorTest {
         // Then
         assertEquals(sum, "12.6");
     }
+
+    @Test
+    void should_return_sum_when_new_line_separator() {
+        // Given
+        Calculator calculator = new Calculator();
+
+        // When
+        String sum = calculator.add("1\n2,3");
+
+        // Then
+        assertEquals(sum, "6");
+    }
 }
