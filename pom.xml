@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.dsoumaila</groupId>
-  <artifactId>kata</artifactId>
+  <artifactId>stringcalculator</artifactId>
   <version>1.0-SNAPSHOT</version>
 
   <name>kata</name>
