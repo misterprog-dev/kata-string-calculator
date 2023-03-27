@@ -8,13 +8,13 @@ class CalculatorTest {
 
     @Test
     void should_return_zero_when_empty_input() {
-        //GIVEN
+        // Given
         Calculator calculator = new Calculator();
 
-        //WHEN
+        // When
         String sum = calculator.add("");
 
-        //THEN
+        // Then
         assertEquals(sum, "0");
     }
 
@@ -28,5 +28,17 @@ class CalculatorTest {
 
         // Then
         assertEquals(sum, "1");
+    }
+
+    @Test
+    void should_return_sum_when_two_input_number() {
+        // Given
+        Calculator calculator = new Calculator();
+
+        // When
+        String sum = calculator.add("1.1,2.2");
+
+        // Then
+        assertEquals(sum, "3.3");
     }
 }
