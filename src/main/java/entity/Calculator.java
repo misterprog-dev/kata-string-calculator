@@ -20,6 +20,7 @@ public class Calculator {
     private static final String EMPTY_INPUT = "";
     private static final String COMMA_SEPARATOR = ",";
     private static final String NEW_LINE_SEPARATOR = "\n";
+    private static final String PIPE_SEPARATOR = "|";
     private static final String DELIMITER_BEGIN = "//";
     private static final String DELIMITER_END = "\n";
     private static final Set<String> LIST_OF_SEPARATORS = Set.of(COMMA_SEPARATOR, NEW_LINE_SEPARATOR);
@@ -27,6 +28,7 @@ public class Calculator {
     private static final String ZERO_STRING = "0";
     private static final String NEW_LINE_FOR_EXCEPTION = "\\n";
     public static final String REGEX_FOR_ALIGN_SEPARATOR = "(,|\\n){2}";
+    private static final String REGEX_PIPE_SEPARATOR = "\\|";
 
     String add(String number) throws InvalidPositionException, MissingNumberException {
         if (EMPTY_INPUT.equals(number.trim())) {
@@ -42,12 +44,7 @@ public class Calculator {
         String delimiter = getDelimiter(number);
         String finalNumber = getFinalNumber(number);
         validation(delimiter, finalNumber);
-
-        if (delimiter != null) {
-            return finalNumber.split(delimiter);
-        }
-
-        return finalNumber.split(ALL_SEPARATOR);
+        return finalNumber.split(getFinalDelimiter(delimiter));
     }
 
     private static String getDelimiter(String number) {
@@ -67,6 +64,20 @@ public class Calculator {
     private static void validation(String delimiter, String finalNumber) throws MissingNumberException, InvalidPositionException {
         validateLastPosition(delimiter, finalNumber);
         validateInput(finalNumber);
+    }
+
+    private static String getFinalDelimiter(String delimiter) {
+        String result = ALL_SEPARATOR;
+
+        if(PIPE_SEPARATOR.equals(delimiter)) {
+            result = REGEX_PIPE_SEPARATOR;
+        }
+
+        if (delimiter != null && !delimiter.equals(PIPE_SEPARATOR)) {
+            result = delimiter;
+        }
+
+        return result;
     }
 
     private static void validateLastPosition(String delimiter, String number) throws MissingNumberException {

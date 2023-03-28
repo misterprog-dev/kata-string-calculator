@@ -111,4 +111,16 @@ class CalculatorTest {
         // Then
         assertEquals(sum, "3");
     }
+
+    @Test
+    void should_add_custom_pipe_separator() throws InvalidPositionException, MissingNumberException {
+        // Given
+        Calculator calculator = new Calculator();
+
+        // When
+        String sum = calculator.add("//|\n1|2|3");
+
+        // Then
+        assertEquals(sum, "6");
+    }
 }
