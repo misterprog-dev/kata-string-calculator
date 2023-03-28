@@ -1,5 +1,6 @@
 package entity;
 
+import exception.InvalidPositionException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -7,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CalculatorTest {
 
     @Test
-    void should_return_zero_when_empty_input() {
+    void should_return_zero_when_empty_input() throws InvalidPositionException {
         // Given
         Calculator calculator = new Calculator();
 
@@ -19,7 +20,7 @@ class CalculatorTest {
     }
 
     @Test
-    void should_return_number_when_one_input_number() {
+    void should_return_number_when_one_input_number() throws InvalidPositionException {
         // Given
         Calculator calculator = new Calculator();
 
@@ -31,7 +32,7 @@ class CalculatorTest {
     }
 
     @Test
-    void should_return_sum_when_two_input_number() {
+    void should_return_sum_when_two_input_number() throws InvalidPositionException {
         // Given
         Calculator calculator = new Calculator();
 
@@ -43,7 +44,7 @@ class CalculatorTest {
     }
 
     @Test
-    void should_return_sum_when_many_input_number() {
+    void should_return_sum_when_many_input_number() throws InvalidPositionException {
         // Given
         Calculator calculator = new Calculator();
 
@@ -55,7 +56,7 @@ class CalculatorTest {
     }
 
     @Test
-    void should_return_sum_when_new_line_separator() {
+    void should_return_sum_when_new_line_separator() throws InvalidPositionException {
         // Given
         Calculator calculator = new Calculator();
 
@@ -64,5 +65,19 @@ class CalculatorTest {
 
         // Then
         assertEquals(sum, "6");
+    }
+
+    @Test
+    void should_return_exception_for_invalid_position() {
+        // Given
+        Calculator calculator = new Calculator();
+
+        // When
+
+        Exception exception = assertThrows(InvalidPositionException.class, () ->
+            calculator.add("175.2,\n35")
+        );
+        // Then
+        assertEquals(exception.getMessage(), "Number expected but '\\n' found at position 6.");
     }
 }
