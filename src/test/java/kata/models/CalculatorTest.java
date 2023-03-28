@@ -1,7 +1,9 @@
-package entity;
+package kata.models;
 
-import exception.InvalidPositionException;
-import exception.MissingNumberException;
+import kata.exception.InvalidPositionException;
+import kata.exception.MissingNumberException;
+import kata.exception.MultipleDelimiterException;
+import kata.models.Calculator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -11,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CalculatorTest {
 
     @Test
-    void should_return_zero_when_empty_input() throws InvalidPositionException, MissingNumberException {
+    void should_return_zero_when_empty_input() throws InvalidPositionException, MissingNumberException, MultipleDelimiterException {
         // Given
         Calculator calculator = new Calculator();
 
@@ -23,7 +25,7 @@ class CalculatorTest {
     }
 
     @Test
-    void should_return_number_when_one_input_number() throws InvalidPositionException, MissingNumberException {
+    void should_return_number_when_one_input_number() throws InvalidPositionException, MissingNumberException, MultipleDelimiterException {
         // Given
         Calculator calculator = new Calculator();
 
@@ -35,7 +37,7 @@ class CalculatorTest {
     }
 
     @Test
-    void should_return_sum_when_two_input_number() throws InvalidPositionException, MissingNumberException {
+    void should_return_sum_when_two_input_number() throws InvalidPositionException, MissingNumberException, MultipleDelimiterException {
         // Given
         Calculator calculator = new Calculator();
 
@@ -47,7 +49,7 @@ class CalculatorTest {
     }
 
     @Test
-    void should_return_sum_when_many_input_number() throws InvalidPositionException, MissingNumberException {
+    void should_return_sum_when_many_input_number() throws InvalidPositionException, MissingNumberException, MultipleDelimiterException {
         // Given
         Calculator calculator = new Calculator();
 
@@ -59,7 +61,7 @@ class CalculatorTest {
     }
 
     @Test
-    void should_return_sum_when_new_line_separator() throws InvalidPositionException, MissingNumberException {
+    void should_return_sum_when_new_line_separator() throws InvalidPositionException, MissingNumberException, MultipleDelimiterException {
         // Given
         Calculator calculator = new Calculator();
 
@@ -101,7 +103,7 @@ class CalculatorTest {
     }
 
     @Test
-    void should_add_custom_pipe_separator() throws InvalidPositionException, MissingNumberException {
+    void should_add_custom_pipe_separator() throws InvalidPositionException, MissingNumberException, MultipleDelimiterException {
         // Given
         Calculator calculator = new Calculator();
 
@@ -113,7 +115,7 @@ class CalculatorTest {
     }
 
     @Test
-    void should_add_custom_sep_separator() throws InvalidPositionException, MissingNumberException {
+    void should_add_custom_sep_separator() throws InvalidPositionException, MissingNumberException, MultipleDelimiterException {
         // Given
         Calculator calculator = new Calculator();
 
@@ -125,8 +127,8 @@ class CalculatorTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"//;\n1;2;3", "//|\n1|2|3", "//sep\n2sep1sep3"})
-    void should_add_custom_separator(String number) throws InvalidPositionException, MissingNumberException {
+    @ValueSource(strings = {"//;\n1;2", "//|\n1|2", "//sep\n2sep1"})
+    void should_add_custom_separator(String number) throws InvalidPositionException, MissingNumberException, MultipleDelimiterException {
         // Given
         Calculator calculator = new Calculator();
 
@@ -134,6 +136,21 @@ class CalculatorTest {
         String sum = calculator.add(number);
 
         // Then
-        assertEquals(sum, "6");
+        assertEquals(sum, "3");
+    }
+
+
+    @ParameterizedTest
+    @ValueSource(strings = {"//|\n1|2,3"})
+    void should_return_exception_for_multiple_delimiters_after_delimiter_defined(String number) {
+        // Given
+        Calculator calculator = new Calculator();
+
+        // When
+        Exception exception = assertThrows(MultipleDelimiterException.class, () ->
+                calculator.add(number)
+        );
+        // Then
+        assertEquals(exception.getMessage(), "'|' expected but ',' found at position 3.");
     }
 }

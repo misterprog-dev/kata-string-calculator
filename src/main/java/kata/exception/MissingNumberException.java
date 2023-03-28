@@ -1,4 +1,4 @@
-package exception;
+package kata.exception;
 
 public class MissingNumberException extends Exception {
     public MissingNumberException() {

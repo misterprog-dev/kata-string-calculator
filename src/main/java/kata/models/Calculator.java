@@ -1,10 +1,12 @@
-package entity;
+package kata.models;
 
-import exception.InvalidPositionException;
-import exception.MissingNumberException;
+import kata.exception.InvalidPositionException;
+import kata.exception.MissingNumberException;
+import kata.exception.MultipleDelimiterException;
 
 import java.math.BigDecimal;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -23,14 +25,15 @@ public class Calculator {
     private static final String PIPE_SEPARATOR = "|";
     private static final String DELIMITER_BEGIN = "//";
     private static final String DELIMITER_END = "\n";
-    private static final Set<String> LIST_OF_SEPARATORS = Set.of(COMMA_SEPARATOR, NEW_LINE_SEPARATOR);
-    private static final String ALL_SEPARATOR = COMMA_SEPARATOR + "|" + NEW_LINE_SEPARATOR;
+    private static final Set<String> LIST_OF_DEFAULT_SEPARATORS = Set.of(COMMA_SEPARATOR, NEW_LINE_SEPARATOR);
     private static final String ZERO_STRING = "0";
     private static final String NEW_LINE_FOR_EXCEPTION = "\\n";
     public static final String REGEX_FOR_ALIGN_SEPARATOR = "(,|\\n){2}";
     private static final String REGEX_PIPE_SEPARATOR = "\\|";
+    private static final String REGEX_FOR_DEFAULT_SEPARATORS = COMMA_SEPARATOR + "|" + NEW_LINE_SEPARATOR;
 
-    String add(String number) throws InvalidPositionException, MissingNumberException {
+
+    String add(String number) throws InvalidPositionException, MissingNumberException, MultipleDelimiterException {
         if (EMPTY_INPUT.equals(number.trim())) {
             return ZERO_STRING;
         }
@@ -40,7 +43,7 @@ public class Calculator {
                 .reduce(ZERO, BigDecimal::add).toString();
     }
 
-    private static String[] extractNumbers(String number) throws MissingNumberException, InvalidPositionException {
+    private static String[] extractNumbers(String number) throws MissingNumberException, InvalidPositionException, MultipleDelimiterException {
         String delimiter = getDelimiter(number);
         String finalNumber = getFinalNumber(number);
         validation(delimiter, finalNumber);
@@ -61,13 +64,14 @@ public class Calculator {
         return number;
     }
 
-    private static void validation(String delimiter, String finalNumber) throws MissingNumberException, InvalidPositionException {
+    private static void validation(String delimiter, String finalNumber) throws MissingNumberException, InvalidPositionException, MultipleDelimiterException {
         validateLastPosition(delimiter, finalNumber);
-        validateInput(finalNumber);
+        validateSeparatorSuccessive(finalNumber);
+        validateMultipleDelimiter(delimiter, finalNumber);
     }
 
     private static String getFinalDelimiter(String delimiter) {
-        String result = ALL_SEPARATOR;
+        String result = REGEX_FOR_DEFAULT_SEPARATORS;
 
         if(PIPE_SEPARATOR.equals(delimiter)) {
             result = REGEX_PIPE_SEPARATOR;
@@ -87,17 +91,27 @@ public class Calculator {
     }
 
     private static boolean hasLastPositionSeparator(String delimiter, String number) {
-        return !concat(LIST_OF_SEPARATORS.stream(), Stream.of(delimiter))
+        return !concat(LIST_OF_DEFAULT_SEPARATORS.stream(), Stream.of(delimiter))
                 .filter(Objects::nonNull)
                 .filter(separator -> endsWith(number, separator))
                 .collect(toList()).isEmpty();
     }
 
-    private static void validateInput(String number) throws InvalidPositionException {
+    private static void validateSeparatorSuccessive(String number) throws InvalidPositionException {
         int indexOfComma = number.indexOf(COMMA_SEPARATOR);
         int indexOfNewLine = number.indexOf(NEW_LINE_SEPARATOR);
         if (isSeparatorAligned(number)) {
             invalidMessageForSeparatorSuccessive(indexOfComma, indexOfNewLine);
+        }
+    }
+
+    private static void validateMultipleDelimiter(String delimiter, String number)  throws MultipleDelimiterException {
+        if (!LIST_OF_DEFAULT_SEPARATORS.contains(delimiter)) {
+
+            Optional<String> invalidSeparator = stream(number.split(delimiter)).filter(n -> !isNumeric(n)).findFirst();
+            if (invalidSeparator.isPresent()) {
+                throw new MultipleDelimiterException("'" + delimiter + "' expected but " + invalidSeparator.get() + " found at position " + number.indexOf(invalidSeparator.get()) + ".");
+            }
         }
     }
 
