@@ -3,6 +3,8 @@ package entity;
 import exception.InvalidPositionException;
 import exception.MissingNumberException;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -68,28 +70,31 @@ class CalculatorTest {
         assertEquals(sum, "6");
     }
 
-    @Test
-    void should_return_exception_for_invalid_position() {
+    @ParameterizedTest
+    @ValueSource(strings = {"175.2,\n35", "175.2,\n\n35"})
+    void should_return_exception_for_invalid_position(String number) {
         // Given
         Calculator calculator = new Calculator();
 
         // When
 
         Exception exception = assertThrows(InvalidPositionException.class, () ->
-            calculator.add("175.2,\n35")
+            calculator.add(number)
         );
         // Then
         assertEquals(exception.getMessage(), "Number expected but '\\n' found at position 6.");
     }
-    @Test
-    void should_return_exception_for_missing_last_position() {
+
+    @ParameterizedTest
+    @ValueSource(strings = {"1,3,", "1,", "2,3,4,,"})
+    void should_return_exception_for_missing_last_position(String number) {
         // Given
         Calculator calculator = new Calculator();
 
         // When
 
         Exception exception = assertThrows(MissingNumberException.class, () ->
-                calculator.add("1,3,")
+                calculator.add(number)
         );
         // Then
         assertEquals(exception.getMessage(), "Number expected but EOF found.");
