@@ -4,16 +4,17 @@ import exception.InvalidPositionException;
 import exception.MissingNumberException;
 
 import java.math.BigDecimal;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Objects;
+import java.util.Set;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import static java.lang.Math.max;
 import static java.math.BigDecimal.ZERO;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.toList;
-import static org.apache.commons.lang3.StringUtils.substringAfter;
-import static org.apache.commons.lang3.StringUtils.substringBetween;
+import static java.util.stream.Stream.concat;
+import static org.apache.commons.lang3.StringUtils.*;
 
 public class Calculator {
     private static final String EMPTY_INPUT = "";
@@ -25,6 +26,7 @@ public class Calculator {
     private static final String ALL_SEPARATOR = COMMA_SEPARATOR + "|" + NEW_LINE_SEPARATOR;
     private static final String ZERO_STRING = "0";
     private static final String NEW_LINE_FOR_EXCEPTION = "\\n";
+    public static final String REGEX_FOR_ALIGN_SEPARATOR = "(,|\\n){2}";
 
     String add(String number) throws InvalidPositionException, MissingNumberException {
         if (EMPTY_INPUT.equals(number.trim())) {
@@ -64,7 +66,7 @@ public class Calculator {
 
     private static void validation(String delimiter, String finalNumber) throws MissingNumberException, InvalidPositionException {
         validateLastPosition(delimiter, finalNumber);
-        validateInput(delimiter, finalNumber);
+        validateInput(finalNumber);
     }
 
     private static void validateLastPosition(String delimiter, String number) throws MissingNumberException {
@@ -74,25 +76,23 @@ public class Calculator {
     }
 
     private static boolean hasLastPositionSeparator(String delimiter, String number) {
-        List<String> listOfAllSeparators = new ArrayList<>(LIST_OF_SEPARATORS);
-        listOfAllSeparators.add(delimiter);
-        return !listOfAllSeparators.stream()
+        return !concat(LIST_OF_SEPARATORS.stream(), Stream.of(delimiter))
                 .filter(Objects::nonNull)
-                .filter(separator -> number.lastIndexOf(separator) == number.length() - 1)
+                .filter(separator -> endsWith(number, separator))
                 .collect(toList()).isEmpty();
     }
 
-    private static void validateInput(String delimiter, String number) throws InvalidPositionException {
+    private static void validateInput(String number) throws InvalidPositionException {
         int indexOfComma = number.indexOf(COMMA_SEPARATOR);
         int indexOfNewLine = number.indexOf(NEW_LINE_SEPARATOR);
-
-        if (delimiter == null && isSeparatorAligned(indexOfComma, indexOfNewLine)) {
+        if (isSeparatorAligned(number)) {
             invalidMessageForSeparatorSuccessive(indexOfComma, indexOfNewLine);
         }
     }
 
-    private static boolean isSeparatorAligned(int indexOfComma, int indexOfNewLine) {
-        return indexOfComma + 1 == indexOfNewLine || indexOfNewLine + 1 == indexOfComma;
+    private static boolean isSeparatorAligned(String number) { //(int indexOfComma, int indexOfNewLine
+        Pattern pattern = Pattern.compile(REGEX_FOR_ALIGN_SEPARATOR);
+        return pattern.matcher(number).find();
     }
 
     private static void invalidMessageForSeparatorSuccessive(int indexOfComma, int indexOfNewLine) throws InvalidPositionException {
