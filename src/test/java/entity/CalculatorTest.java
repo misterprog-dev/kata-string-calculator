@@ -1,6 +1,7 @@
 package entity;
 
 import exception.InvalidPositionException;
+import exception.MissingNumberException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -8,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CalculatorTest {
 
     @Test
-    void should_return_zero_when_empty_input() throws InvalidPositionException {
+    void should_return_zero_when_empty_input() throws InvalidPositionException, MissingNumberException {
         // Given
         Calculator calculator = new Calculator();
 
@@ -20,7 +21,7 @@ class CalculatorTest {
     }
 
     @Test
-    void should_return_number_when_one_input_number() throws InvalidPositionException {
+    void should_return_number_when_one_input_number() throws InvalidPositionException, MissingNumberException {
         // Given
         Calculator calculator = new Calculator();
 
@@ -32,7 +33,7 @@ class CalculatorTest {
     }
 
     @Test
-    void should_return_sum_when_two_input_number() throws InvalidPositionException {
+    void should_return_sum_when_two_input_number() throws InvalidPositionException, MissingNumberException {
         // Given
         Calculator calculator = new Calculator();
 
@@ -44,7 +45,7 @@ class CalculatorTest {
     }
 
     @Test
-    void should_return_sum_when_many_input_number() throws InvalidPositionException {
+    void should_return_sum_when_many_input_number() throws InvalidPositionException, MissingNumberException {
         // Given
         Calculator calculator = new Calculator();
 
@@ -56,7 +57,7 @@ class CalculatorTest {
     }
 
     @Test
-    void should_return_sum_when_new_line_separator() throws InvalidPositionException {
+    void should_return_sum_when_new_line_separator() throws InvalidPositionException, MissingNumberException {
         // Given
         Calculator calculator = new Calculator();
 
@@ -79,5 +80,19 @@ class CalculatorTest {
         );
         // Then
         assertEquals(exception.getMessage(), "Number expected but '\\n' found at position 6.");
+    }
+
+    @Test
+    void should_return_exception_for_missing_last_position() {
+        // Given
+        Calculator calculator = new Calculator();
+
+        // When
+
+        Exception exception = assertThrows(MissingNumberException.class, () ->
+                calculator.add("1,3,")
+        );
+        // Then
+        assertEquals(exception.getMessage(), "Number expected but EOF found.");
     }
 }

@@ -4,20 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cccc004b-8f04-411a-9a4c-634999779bbd" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.github/workflows/build.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/kata/Application.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/META-INF/maven/archetype.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/archetype-resources/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/archetype-resources/src/main/java/App.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/archetype-resources/src/test/java/AppTest.java" afterDir="false" />
+    <list default="true" id="cccc004b-8f04-411a-9a4c-634999779bbd" name="Changes" comment="feat: add case of returning exception for invalid position">
+      <change afterPath="$PROJECT_DIR$/src/main/java/exception/MissingNumberException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/entity/Calculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entity/Calculator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/entity/CalculatorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/entity/CalculatorTest.java" afterDir="false" />
+    </list>
+    <list id="f13003b1-8727-4771-894c-94140305ebc7" name="Changes by YannDUCLOUX" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/entity/Calculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entity/Calculator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/entity/CalculatorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/entity/CalculatorTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,12 +22,38 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="JUnit5 Test Class" />
         <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/src/main/java/entity/Calculator.java">
+      <ranges>
+        <range start1="3" end1="3" start2="3" end2="4" changelist="f13003b1-8727-4771-894c-94140305ebc7" />
+        <range start1="6" end1="6" start2="7" end2="8" changelist="cccc004b-8f04-411a-9a4c-634999779bbd" />
+        <range start1="10" end1="10" start2="12" end2="13" changelist="cccc004b-8f04-411a-9a4c-634999779bbd" />
+        <range start1="12" end1="14" start2="15" end2="16" changelist="f13003b1-8727-4771-894c-94140305ebc7" />
+        <range start1="16" end1="19" start2="18" end2="23" changelist="cccc004b-8f04-411a-9a4c-634999779bbd" />
+        <range start1="20" end1="21" start2="24" end2="25" changelist="f13003b1-8727-4771-894c-94140305ebc7" />
+        <range start1="24" end1="24" start2="28" end2="29" changelist="f13003b1-8727-4771-894c-94140305ebc7" />
+        <range start1="33" end1="33" start2="38" end2="50" changelist="f13003b1-8727-4771-894c-94140305ebc7" />
+      </ranges>
+    </file>
+    <file path="$PROJECT_DIR$/src/test/java/entity/CalculatorTest.java">
+      <ranges>
+        <range start1="3" end1="3" start2="3" end2="4" changelist="cccc004b-8f04-411a-9a4c-634999779bbd" />
+        <range start1="10" end1="11" start2="11" end2="12" changelist="cccc004b-8f04-411a-9a4c-634999779bbd" />
+        <range start1="22" end1="23" start2="23" end2="24" changelist="f13003b1-8727-4771-894c-94140305ebc7" />
+        <range start1="34" end1="35" start2="35" end2="36" changelist="f13003b1-8727-4771-894c-94140305ebc7" />
+        <range start1="46" end1="47" start2="47" end2="48" changelist="f13003b1-8727-4771-894c-94140305ebc7" />
+        <range start1="58" end1="59" start2="59" end2="60" changelist="f13003b1-8727-4771-894c-94140305ebc7" />
+        <range start1="82" end1="82" start2="83" end2="97" changelist="cccc004b-8f04-411a-9a4c-634999779bbd" />
+      </ranges>
+    </file>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -58,14 +79,114 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "editing.templates",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="exception" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="entity" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.CalculatorTest">
+    <configuration name="CalculatorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TDD-kata-stringcalculator" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="entity.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="entity" />
+      <option name="MAIN_CLASS_NAME" value="entity.CalculatorTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CalculatorTest.addWin" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TDD-kata-stringcalculator" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="entity.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="entity" />
+      <option name="MAIN_CLASS_NAME" value="entity.CalculatorTest" />
+      <option name="METHOD_NAME" value="addWin" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CalculatorTest.should_return_exception_for_missing_last_position" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TDD-kata-stringcalculator" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="entity.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="entity" />
+      <option name="MAIN_CLASS_NAME" value="entity.CalculatorTest" />
+      <option name="METHOD_NAME" value="should_return_exception_for_missing_last_position" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CalculatorTest.should_return_number_when_one_input_number" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="TDD-kata-stringcalculator" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="entity.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="entity" />
+      <option name="MAIN_CLASS_NAME" value="entity.CalculatorTest" />
+      <option name="METHOD_NAME" value="should_return_number_when_one_input_number" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="TDD-kata-stringcalculator" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="TDD-kata-stringcalculator" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.CalculatorTest" />
+        <item itemvalue="JUnit.CalculatorTest.should_return_exception_for_missing_last_position" />
+        <item itemvalue="JUnit.CalculatorTest.should_return_number_when_one_input_number" />
+        <item itemvalue="JUnit.CalculatorTest.addWin" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -74,11 +195,68 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1679912868110</updated>
-      <workItem from="1679912869476" duration="700000" />
+      <workItem from="1679912869476" duration="1319000" />
+      <workItem from="1679923681036" duration="10600000" />
     </task>
+    <task id="LOCAL-00001" summary="return zero when empty input">
+      <created>1679926127130</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1679926127130</updated>
+    </task>
+    <task id="LOCAL-00002" summary="feat: add case of should return number when one input number">
+      <created>1679926648981</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1679926648981</updated>
+    </task>
+    <task id="LOCAL-00003" summary="feat: add case of return sum when two input number">
+      <created>1679927885362</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1679927885362</updated>
+    </task>
+    <task id="LOCAL-00004" summary="feat: add case of handle an unknow number of arguments">
+      <created>1679928034926</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1679928034926</updated>
+    </task>
+    <task id="LOCAL-00005" summary="feat: add case of sum when new line separator">
+      <created>1679928735288</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1679928735288</updated>
+    </task>
+    <task id="LOCAL-00006" summary="feat: add case of returning exception for invalid position">
+      <created>1679992543252</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1679992543252</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="return zero when empty input" />
+    <MESSAGE value="feat: add case of should return number when one input number" />
+    <MESSAGE value="feat: add case of return sum when two input number" />
+    <MESSAGE value="feat: add case of handle an unknow number of arguments" />
+    <MESSAGE value="feat: add case of sum when new line separator" />
+    <MESSAGE value="feat: add case of returning exception for invalid position" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add case of returning exception for invalid position" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
