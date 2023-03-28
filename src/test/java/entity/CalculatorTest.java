@@ -81,7 +81,6 @@ class CalculatorTest {
         // Then
         assertEquals(exception.getMessage(), "Number expected but '\\n' found at position 6.");
     }
-
     @Test
     void should_return_exception_for_missing_last_position() {
         // Given
@@ -94,5 +93,17 @@ class CalculatorTest {
         );
         // Then
         assertEquals(exception.getMessage(), "Number expected but EOF found.");
+    }
+
+    @Test
+    void should_add_custom_separator() throws InvalidPositionException, MissingNumberException {
+        // Given
+        Calculator calculator = new Calculator();
+
+        // When
+        String sum = calculator.add("//;\n1;2");
+
+        // Then
+        assertEquals(sum, "3");
     }
 }
