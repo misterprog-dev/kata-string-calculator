@@ -101,24 +101,37 @@ class CalculatorTest {
     }
 
     @Test
-    void should_add_custom_separator() throws InvalidPositionException, MissingNumberException {
-        // Given
-        Calculator calculator = new Calculator();
-
-        // When
-        String sum = calculator.add("//;\n1;2");
-
-        // Then
-        assertEquals(sum, "3");
-    }
-
-    @Test
     void should_add_custom_pipe_separator() throws InvalidPositionException, MissingNumberException {
         // Given
         Calculator calculator = new Calculator();
 
         // When
         String sum = calculator.add("//|\n1|2|3");
+
+        // Then
+        assertEquals(sum, "6");
+    }
+
+    @Test
+    void should_add_custom_sep_separator() throws InvalidPositionException, MissingNumberException {
+        // Given
+        Calculator calculator = new Calculator();
+
+        // When
+        String sum = calculator.add("//sep\n2sep3");
+
+        // Then
+        assertEquals(sum, "5");
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"//;\n1;2;3", "//|\n1|2|3", "//sep\n2sep1sep3"})
+    void should_add_custom_separator(String number) throws InvalidPositionException, MissingNumberException {
+        // Given
+        Calculator calculator = new Calculator();
+
+        // When
+        String sum = calculator.add(number);
 
         // Then
         assertEquals(sum, "6");
