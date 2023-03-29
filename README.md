@@ -2,7 +2,7 @@
 
 > https://codingdojo.org/kata/StringCalculator/
 
-kata perform in pair-programming with [misterprog-dev](https://github.com/misterprog-dev)
+kata perform in pair-programming with [misterprog-dev](https://github.com/misterprog-dev) and [Tandoori](https://github.com/Yann-Ducloux)
 
 # String Calculator
 
