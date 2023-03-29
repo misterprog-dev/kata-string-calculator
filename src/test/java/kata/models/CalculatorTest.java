@@ -166,4 +166,17 @@ class CalculatorTest {
         // Then
         assertEquals(exception.getMessage(), "Negative not allowed : -1");
     }
+
+    @Test
+    void should_return_exception_for_multi_negative_value() {
+        // Given
+        Calculator calculator = new Calculator();
+
+        // When
+        Exception exception = assertThrows(NegativeNumberException.class, () ->
+                calculator.add("2,-4,-5")
+        );
+        // Then
+        assertEquals(exception.getMessage(), "Negative not allowed : -4, -5");
+    }
 }

@@ -6,6 +6,7 @@ import kata.exception.MultipleDelimiterException;
 import kata.exception.NegativeNumberException;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -13,6 +14,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 import static java.lang.Math.max;
+import static java.lang.String.join;
 import static java.math.BigDecimal.ZERO;
 import static java.util.Arrays.stream;
 import static java.util.stream.Collectors.toList;
@@ -32,6 +34,7 @@ public class Calculator {
     public static final String REGEX_FOR_ALIGN_SEPARATOR = "(,|\\n){2}";
     private static final String REGEX_PIPE_SEPARATOR = "\\|";
     private static final String REGEX_FOR_DEFAULT_SEPARATORS = COMMA_SEPARATOR + "|" + NEW_LINE_SEPARATOR;
+    public static final String NEGATIVE_NUMBER_DELIMITER = ", ";
 
 
     String add(String number) throws InvalidPositionException, MissingNumberException, MultipleDelimiterException, NegativeNumberException {
@@ -119,9 +122,9 @@ public class Calculator {
     }
 
     private static void validateIsNegative(String delimiter, String number) throws NegativeNumberException{
-        Optional<String> negativeNumber = stream(number.split(getFinalDelimiter(delimiter))).filter(n -> Double.parseDouble(n)<0).findFirst();
-        if(negativeNumber.isPresent()) {
-            throw new NegativeNumberException("Negative not allowed : " + negativeNumber.get());
+        List<String> negativesNumber = stream(number.split(getFinalDelimiter(delimiter))).filter(n -> Double.parseDouble(n)<0).toList();
+        if(!negativesNumber.isEmpty()) {
+            throw new NegativeNumberException("Negative not allowed : " + join(NEGATIVE_NUMBER_DELIMITER, negativesNumber));
         }
     }
 
