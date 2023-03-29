@@ -3,6 +3,7 @@ package kata.models;
 import kata.exception.InvalidPositionException;
 import kata.exception.MissingNumberException;
 import kata.exception.MultipleDelimiterException;
+import kata.exception.NegativeNumberException;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -33,7 +34,7 @@ public class Calculator {
     private static final String REGEX_FOR_DEFAULT_SEPARATORS = COMMA_SEPARATOR + "|" + NEW_LINE_SEPARATOR;
 
 
-    String add(String number) throws InvalidPositionException, MissingNumberException, MultipleDelimiterException {
+    String add(String number) throws InvalidPositionException, MissingNumberException, MultipleDelimiterException, NegativeNumberException {
         if (EMPTY_INPUT.equals(number.trim())) {
             return ZERO_STRING;
         }
@@ -43,7 +44,7 @@ public class Calculator {
                 .reduce(ZERO, BigDecimal::add).toString();
     }
 
-    private static String[] extractNumbers(String number) throws MissingNumberException, InvalidPositionException, MultipleDelimiterException {
+    private static String[] extractNumbers(String number) throws MissingNumberException, InvalidPositionException, MultipleDelimiterException, NegativeNumberException {
         String delimiter = getDelimiter(number);
         String finalNumber = getFinalNumber(number);
         validation(delimiter, finalNumber);
@@ -64,11 +65,13 @@ public class Calculator {
         return number;
     }
 
-    private static void validation(String delimiter, String finalNumber) throws MissingNumberException, InvalidPositionException, MultipleDelimiterException {
+    private static void validation(String delimiter, String finalNumber) throws MissingNumberException, InvalidPositionException, MultipleDelimiterException, NegativeNumberException {
         validateLastPosition(delimiter, finalNumber);
         validateSeparatorSuccessive(finalNumber);
         validateMultipleDelimiter(delimiter, finalNumber);
+        validateIsNegative(delimiter, finalNumber);
     }
+
 
     private static String getFinalDelimiter(String delimiter) {
         String result = REGEX_FOR_DEFAULT_SEPARATORS;
@@ -112,6 +115,13 @@ public class Calculator {
             if (invalidSeparator.isPresent()) {
                 throw new MultipleDelimiterException("'" + delimiter + "' expected but '" + invalidSeparator.get() + "' found at position " + number.indexOf(invalidSeparator.get()) + ".");
             }
+        }
+    }
+
+    private static void validateIsNegative(String delimiter, String number) throws NegativeNumberException{
+        Optional<String> negativeNumber = stream(number.split(getFinalDelimiter(delimiter))).filter(n -> Double.parseDouble(n)<0).findFirst();
+        if(negativeNumber.isPresent()) {
+            throw new NegativeNumberException("Negative not allowed : " + negativeNumber.get());
         }
     }
 
