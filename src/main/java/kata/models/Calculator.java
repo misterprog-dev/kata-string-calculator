@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-import static java.lang.Math.max;
 import static java.lang.String.join;
 import static java.math.BigDecimal.ZERO;
 import static java.util.Arrays.stream;
@@ -35,6 +35,7 @@ public class Calculator {
     private static final String REGEX_PIPE_SEPARATOR = "\\|";
     private static final String REGEX_FOR_DEFAULT_SEPARATORS = COMMA_SEPARATOR + "|" + NEW_LINE_SEPARATOR;
     public static final String NEGATIVE_NUMBER_DELIMITER = ", ";
+    public static final String EMPTY_STRING = "";
 
 
     String add(String number) throws InvalidPositionException, MissingNumberException, MultipleDelimiterException, NegativeNumberException {
@@ -70,24 +71,8 @@ public class Calculator {
 
     private static void validation(String delimiter, String finalNumber) throws MissingNumberException, InvalidPositionException, MultipleDelimiterException, NegativeNumberException {
         validateLastPosition(delimiter, finalNumber);
-        validateSeparatorSuccessive(finalNumber);
         validateMultipleDelimiter(delimiter, finalNumber);
-        validateIsNegative(delimiter, finalNumber);
-    }
-
-
-    private static String getFinalDelimiter(String delimiter) {
-        String result = REGEX_FOR_DEFAULT_SEPARATORS;
-
-        if(PIPE_SEPARATOR.equals(delimiter)) {
-            result = REGEX_PIPE_SEPARATOR;
-        }
-
-        if (delimiter != null && !delimiter.equals(PIPE_SEPARATOR)) {
-            result = delimiter;
-        }
-
-        return result;
+        validateMultipleErrors(delimiter, finalNumber);
     }
 
     private static void validateLastPosition(String delimiter, String number) throws MissingNumberException {
@@ -103,17 +88,13 @@ public class Calculator {
                 .collect(toList()).isEmpty();
     }
 
-    private static void validateSeparatorSuccessive(String number) throws InvalidPositionException {
-        int indexOfComma = number.indexOf(COMMA_SEPARATOR);
-        int indexOfNewLine = number.indexOf(NEW_LINE_SEPARATOR);
-        if (isSeparatorAligned(number)) {
-            invalidMessageForSeparatorSuccessive(indexOfComma, indexOfNewLine);
-        }
-    }
-
-    private static void validateMultipleDelimiter(String delimiter, String number)  throws MultipleDelimiterException {
-        if (delimiter != null && !LIST_OF_DEFAULT_SEPARATORS.contains(delimiter)) {
+    private static void validateMultipleDelimiter(String delimiter, String number) throws MultipleDelimiterException {
+        if (hasDelimiterDefinedAndNotDefault(delimiter)) {
             Optional<String> invalidSeparator = stream(number.split(delimiter)).filter(n -> isNotDelimiterAndNotANumber(delimiter, n)).findFirst();
+
+            stream(number.split(delimiter))
+                    .filter(n -> isNotDelimiterAndNotANumber(delimiter, n))
+                    .findAny();
 
             if (invalidSeparator.isPresent()) {
                 throw new MultipleDelimiterException("'" + delimiter + "' expected but '" + invalidSeparator.get() + "' found at position " + number.indexOf(invalidSeparator.get()) + ".");
@@ -121,25 +102,84 @@ public class Calculator {
         }
     }
 
-    private static void validateIsNegative(String delimiter, String number) throws NegativeNumberException{
-        List<String> negativesNumber = stream(number.split(getFinalDelimiter(delimiter))).filter(n -> Double.parseDouble(n)<0).toList();
-        if(!negativesNumber.isEmpty()) {
-            throw new NegativeNumberException("Negative not allowed : " + join(NEGATIVE_NUMBER_DELIMITER, negativesNumber));
+    private static boolean hasDelimiterDefinedAndNotDefault(String delimiter) {
+        return delimiter != null && !LIST_OF_DEFAULT_SEPARATORS.contains(delimiter);
+    }
+
+    private static void validateMultipleErrors(String delimiter, String number) throws InvalidPositionException, NegativeNumberException {
+        boolean isNegativeAndMultipleSep = checkNegativeAndMultipleNumber(delimiter, number);
+        boolean isSuccessiveNumber = checkOnlySuccessiveNumbers(number, isNegativeAndMultipleSep);
+        checkOnlyNegativeNumbers(delimiter, number, isSuccessiveNumber);
+    }
+
+    private static boolean checkNegativeAndMultipleNumber(String delimiter, String number) throws InvalidPositionException {
+        if (!getNegativesNumbers(number, delimiter).isEmpty() && getLastSeparator(number) != null) {
+            throw new InvalidPositionException(getNegativeErrorMessage(delimiter, number) + "\n" + getSuccessiveSepErrorsMessage(number));
         }
+        return false;
+    }
+
+    private static boolean checkOnlySuccessiveNumbers(String number, boolean isNegativeAndMultipleSep) throws InvalidPositionException {
+        if (!isNegativeAndMultipleSep && getLastSeparator(number) != null) {
+            throw new InvalidPositionException(getSuccessiveSepErrorsMessage(number).replace("\n", NEW_LINE_FOR_EXCEPTION));
+        }
+        return false;
+    }
+
+    private static void checkOnlyNegativeNumbers(String delimiter, String number, boolean isSuccessiveNumber) throws NegativeNumberException {
+        if (!isSuccessiveNumber && !getNegativesNumbers(number, delimiter).isEmpty()) {
+            throw new NegativeNumberException(getNegativeErrorMessage(delimiter, number));
+        }
+    }
+
+    private static String getFinalDelimiter(String delimiter) {
+        String result = REGEX_FOR_DEFAULT_SEPARATORS;
+
+        if (PIPE_SEPARATOR.equals(delimiter)) {
+            result = REGEX_PIPE_SEPARATOR;
+        }
+
+        if (delimiter != null && !delimiter.equals(PIPE_SEPARATOR)) {
+            result = delimiter;
+        }
+
+        return result;
+    }
+
+
+    private static String getSuccessiveSepErrorsMessage(String number) {
+        if (getLastSeparator(number) != null) {
+            return "Number expected but '" + right(getLastSeparator(number), 1) +
+                    "' found at position " + (number.indexOf(getLastSeparator(number)) + 1) + ".";
+        }
+        return EMPTY_STRING;
+    }
+
+    private static String getNegativeErrorMessage(String delimiter, String number) {
+        if (!getNegativesNumbers(number, delimiter).isEmpty()) {
+            return "Negative not allowed : " + join(NEGATIVE_NUMBER_DELIMITER, getNegativesNumbers(number, delimiter));
+        }
+        return EMPTY_STRING;
     }
 
     private static boolean isNotDelimiterAndNotANumber(String delimiter, String currentNumber) {
         return !currentNumber.equals(delimiter) && !isNumeric(currentNumber);
     }
 
-    private static boolean isSeparatorAligned(String number) { //(int indexOfComma, int indexOfNewLine
+    private static String getLastSeparator(String number) {
         Pattern pattern = Pattern.compile(REGEX_FOR_ALIGN_SEPARATOR);
-        return pattern.matcher(number).find();
+        Matcher matcher = pattern.matcher(number);
+
+        if (matcher.find()) {
+            return number.substring(matcher.start(), matcher.end());
+        }
+
+        return null;
     }
 
-    private static void invalidMessageForSeparatorSuccessive(int indexOfComma, int indexOfNewLine) throws InvalidPositionException {
-        int position = max(indexOfComma, indexOfNewLine);
-        String separator = indexOfComma == position ? COMMA_SEPARATOR : NEW_LINE_FOR_EXCEPTION;
-        throw new InvalidPositionException("Number expected but '" + separator + "' found at position " + position + ".");
+    private static List<String> getNegativesNumbers(String number, String delimiter) {
+        return stream(number.split(getFinalDelimiter(delimiter)))
+                .filter(n -> !n.isEmpty())
+                .filter(n -> Double.parseDouble(n) < 0).collect(toList());
     }
 }

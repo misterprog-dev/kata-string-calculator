@@ -179,4 +179,18 @@ class CalculatorTest {
         // Then
         assertEquals(exception.getMessage(), "Negative not allowed : -4, -5");
     }
+
+    @Test
+    void should_return_exception_for_multi_errors_value() {
+        // Given
+        Calculator calculator = new Calculator();
+
+        // When
+        Exception exception = assertThrows(InvalidPositionException.class, () ->
+                calculator.add("-1,,2")
+        );
+
+        // Then
+        assertEquals(exception.getMessage(), "Negative not allowed : -1\nNumber expected but ',' found at position 3.");
+    }
 }
