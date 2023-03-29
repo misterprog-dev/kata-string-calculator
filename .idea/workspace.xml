@@ -6,10 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="cccc004b-8f04-411a-9a4c-634999779bbd" name="Changes" comment="feat: add case of returning exception for last position separator">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/entity/Calculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entity/Calculator.java" afterDir="false" />
-    </list>
-    <list id="027ae1f9-bef8-4058-8866-55f12526c394" name="Changes by Tandoori" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/entity/Calculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entity/Calculator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kata/exception/InvalidPositionException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kata/exception/InvalidPositionException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kata/exception/MissingNumberException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kata/exception/MissingNumberException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kata/exception/MultipleDelimiterException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kata/exception/MultipleDelimiterException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kata/exception/NegativeNumberException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kata/exception/NegativeNumberException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/kata/models/Calculator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/kata/models/Calculator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,20 +27,6 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/src/main/java/entity/Calculator.java">
-      <ranges>
-        <range start1="6" end1="8" start2="6" end2="9" changelist="cccc004b-8f04-411a-9a4c-634999779bbd" />
-        <range start1="14" end1="16" start2="15" end2="17" changelist="cccc004b-8f04-411a-9a4c-634999779bbd" />
-        <range start1="66" end1="67" start2="67" end2="68" changelist="cccc004b-8f04-411a-9a4c-634999779bbd" />
-        <range start1="76" end1="79" start2="77" end2="78" changelist="027ae1f9-bef8-4058-8866-55f12526c394" />
-        <range start1="80" end1="81" start2="79" end2="80" changelist="cccc004b-8f04-411a-9a4c-634999779bbd" />
-        <range start1="84" end1="85" start2="83" end2="84" changelist="cccc004b-8f04-411a-9a4c-634999779bbd" />
-        <range start1="87" end1="89" start2="86" end2="87" changelist="cccc004b-8f04-411a-9a4c-634999779bbd" />
-        <range start1="93" end1="95" start2="91" end2="94" changelist="cccc004b-8f04-411a-9a4c-634999779bbd" />
-      </ranges>
-    </file>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -59,23 +46,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "editing.templates",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editing.templates&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="exception" />
@@ -87,7 +74,7 @@
       <recent name="entity" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.CalculatorTest">
+  <component name="RunManager" selected="JUnit.java in stringcalculator">
     <configuration name="CalculatorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="stringcalculator" />
       <extension name="coverage">
@@ -103,18 +90,51 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="CalculatorTest.should_return_exception_for_invalid_position" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="CalculatorTest.should_return_exception_for_invalid_position (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="stringcalculator" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="entity.*" />
+          <option name="PATTERN" value="kata.models.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="entity" />
-      <option name="MAIN_CLASS_NAME" value="entity.CalculatorTest" />
-      <option name="METHOD_NAME" value="should_return_exception_for_invalid_position" />
+      <option name="PACKAGE_NAME" value="kata.models" />
+      <option name="MAIN_CLASS_NAME" value="kata.models.CalculatorTest" />
+      <option name="METHOD_NAME" value="should_return_exception_for_invalid_position(java.lang.String)" />
       <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CalculatorTest.should_return_exception_for_multi_errors_value" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="stringcalculator" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="kata.models.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="kata.models" />
+      <option name="MAIN_CLASS_NAME" value="kata.models.CalculatorTest" />
+      <option name="METHOD_NAME" value="should_return_exception_for_multi_errors_value" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CalculatorTest.should_return_sum_when_new_line_separator" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="stringcalculator" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="kata.models.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="kata.models" />
+      <option name="MAIN_CLASS_NAME" value="kata.models.CalculatorTest" />
+      <option name="METHOD_NAME" value="should_return_sum_when_new_line_separator" />
+      <option name="TEST_OBJECT" value="method" />
+      <dir value="$PROJECT_DIR$/src/test/java" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -142,9 +162,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.CalculatorTest" />
-        <item itemvalue="JUnit.CalculatorTest.should_return_exception_for_invalid_position" />
         <item itemvalue="JUnit.java in stringcalculator" />
+        <item itemvalue="JUnit.CalculatorTest.should_return_sum_when_new_line_separator" />
+        <item itemvalue="JUnit.CalculatorTest" />
+        <item itemvalue="JUnit.CalculatorTest.should_return_exception_for_multi_errors_value" />
+        <item itemvalue="JUnit.CalculatorTest.should_return_exception_for_invalid_position (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -227,6 +249,14 @@
     <MESSAGE value="feat: add case of returning exception for invalid position" />
     <MESSAGE value="feat: add case of returning exception for last position separator" />
     <option name="LAST_COMMIT_MESSAGE" value="feat: add case of returning exception for last position separator" />
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="JUnit">
+        <watch expression="stream(number.split(delimiter)).toString()" language="JAVA" custom="java.util.stream.Collectors" />
+        <watch expression="&quot;-1,,2&quot;.indexOf(0) &#10;&quot;&quot;" language="JAVA" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -6,10 +6,7 @@ import kata.exception.MultipleDelimiterException;
 import kata.exception.NegativeNumberException;
 
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -91,14 +88,12 @@ public class Calculator {
     private static void validateMultipleDelimiter(String delimiter, String number) throws MultipleDelimiterException {
         if (hasDelimiterDefinedAndNotDefault(delimiter)) {
             Optional<String> invalidSeparator = stream(number.split(delimiter)).filter(n -> isNotDelimiterAndNotANumber(delimiter, n)).findFirst();
-
             stream(number.split(delimiter))
                     .filter(n -> isNotDelimiterAndNotANumber(delimiter, n))
-                    .findAny();
-
-            if (invalidSeparator.isPresent()) {
-                throw new MultipleDelimiterException("'" + delimiter + "' expected but '" + invalidSeparator.get() + "' found at position " + number.indexOf(invalidSeparator.get()) + ".");
-            }
+                    .findAny()
+                    .ifPresent(s->{
+                        throw new MultipleDelimiterException("'" + delimiter + "' expected but '" + invalidSeparator.get() + "' found at position " + number.indexOf(invalidSeparator.get()) + ".");
+                    });
         }
     }
 
@@ -126,10 +121,25 @@ public class Calculator {
         return false;
     }
 
+    private static String getSuccessiveSepErrorsMessage(String number) {
+        if (getLastSeparator(number) != null) {
+            return "Number expected but '" + right(getLastSeparator(number), 1) +
+                    "' found at position " + (number.indexOf(getLastSeparator(number)) + 1) + ".";
+        }
+        return EMPTY_STRING;
+    }
+
     private static void checkOnlyNegativeNumbers(String delimiter, String number, boolean isSuccessiveNumber) throws NegativeNumberException {
         if (!isSuccessiveNumber && !getNegativesNumbers(number, delimiter).isEmpty()) {
             throw new NegativeNumberException(getNegativeErrorMessage(delimiter, number));
         }
+    }
+
+    private static String getNegativeErrorMessage(String delimiter, String number) {
+        if (!getNegativesNumbers(number, delimiter).isEmpty()) {
+            return "Negative not allowed : " + join(NEGATIVE_NUMBER_DELIMITER, getNegativesNumbers(number, delimiter));
+        }
+        return EMPTY_STRING;
     }
 
     private static String getFinalDelimiter(String delimiter) {
@@ -146,26 +156,6 @@ public class Calculator {
         return result;
     }
 
-
-    private static String getSuccessiveSepErrorsMessage(String number) {
-        if (getLastSeparator(number) != null) {
-            return "Number expected but '" + right(getLastSeparator(number), 1) +
-                    "' found at position " + (number.indexOf(getLastSeparator(number)) + 1) + ".";
-        }
-        return EMPTY_STRING;
-    }
-
-    private static String getNegativeErrorMessage(String delimiter, String number) {
-        if (!getNegativesNumbers(number, delimiter).isEmpty()) {
-            return "Negative not allowed : " + join(NEGATIVE_NUMBER_DELIMITER, getNegativesNumbers(number, delimiter));
-        }
-        return EMPTY_STRING;
-    }
-
-    private static boolean isNotDelimiterAndNotANumber(String delimiter, String currentNumber) {
-        return !currentNumber.equals(delimiter) && !isNumeric(currentNumber);
-    }
-
     private static String getLastSeparator(String number) {
         Pattern pattern = Pattern.compile(REGEX_FOR_ALIGN_SEPARATOR);
         Matcher matcher = pattern.matcher(number);
@@ -175,6 +165,10 @@ public class Calculator {
         }
 
         return null;
+    }
+
+    private static boolean isNotDelimiterAndNotANumber(String delimiter, String currentNumber) {
+        return !currentNumber.equals(delimiter) && !isNumeric(currentNumber);
     }
 
     private static List<String> getNegativesNumbers(String number, String delimiter) {

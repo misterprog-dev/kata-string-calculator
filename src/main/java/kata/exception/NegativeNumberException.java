@@ -1,6 +1,6 @@
 package kata.exception;
 
-public class NegativeNumberException extends Exception {
+public class NegativeNumberException extends RuntimeException {
     public NegativeNumberException(String message) {
         super(message);
     }
