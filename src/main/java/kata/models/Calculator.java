@@ -106,13 +106,17 @@ public class Calculator {
     }
 
     private static void validateMultipleDelimiter(String delimiter, String number)  throws MultipleDelimiterException {
-        if (!LIST_OF_DEFAULT_SEPARATORS.contains(delimiter)) {
+        if (delimiter != null && !LIST_OF_DEFAULT_SEPARATORS.contains(delimiter)) {
+            Optional<String> invalidSeparator = stream(number.split(delimiter)).filter(n -> isNotDelimiterAndNotANumber(delimiter, n)).findFirst();
 
-            Optional<String> invalidSeparator = stream(number.split(delimiter)).filter(n -> !isNumeric(n)).findFirst();
             if (invalidSeparator.isPresent()) {
-                throw new MultipleDelimiterException("'" + delimiter + "' expected but " + invalidSeparator.get() + " found at position " + number.indexOf(invalidSeparator.get()) + ".");
+                throw new MultipleDelimiterException("'" + delimiter + "' expected but '" + invalidSeparator.get() + "' found at position " + number.indexOf(invalidSeparator.get()) + ".");
             }
         }
+    }
+
+    private static boolean isNotDelimiterAndNotANumber(String delimiter, String currentNumber) {
+        return !currentNumber.equals(delimiter) && !isNumeric(currentNumber);
     }
 
     private static boolean isSeparatorAligned(String number) { //(int indexOfComma, int indexOfNewLine
